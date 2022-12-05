@@ -1,7 +1,7 @@
 <script lang="ts">
   // import svelteLogo from "./assets/svelte.svg";
   // import Counter from "./lib/Counter.svelte";
-  import { getMessages, type Message } from "codicent-js";
+  import { getMessages, type Message, getProjectInfo, type ProjectInfo } from "codicent-js";
 
   interface FormInfo {
     name: string;
@@ -12,7 +12,7 @@
   let debug = "";
   let messages: Message[] = [];
   let selectedForm: string;
-  let project = "uxreview";
+  let project: ProjectInfo;
 
   const getForms = (messages: Message[]): FormInfo[] => {
     return messages
@@ -31,10 +31,11 @@
           // debug = JSON.stringify(msgs, null, 2);
           debug = JSON.stringify(getForms(msgs), null, 2);
         });
+      getProjectInfo(token).then((p) => (project = p));
     }
   }
 
-  $: templateUrl = `https://codicent.com/form/${project}/${selectedForm}?token=${token}`;
+  $: templateUrl = `https://codicent.com/form/${project?.nickname || "uxreview"}/${selectedForm}?token=${token}`;
 </script>
 
 <main>
@@ -57,6 +58,14 @@
   </div> -->
   <div>
     <iframe title="form" src={templateUrl} width="320" height="640" />
+  </div>
+  <div>
+    <ul>
+      <li>Add a button</li>
+      <li>Remove button</li>
+      <li>Add text entry</li>
+      <li><a>Remove slider</a></li>
+    </ul>
   </div>
 
   <!-- <p>
