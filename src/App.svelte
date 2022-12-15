@@ -36,6 +36,7 @@
   }
 
   $: templateUrl = `https://codicent.com/form/${project?.nickname || "uxreview"}/${selectedForm}?token=${token}`;
+  // $: templateUrl = `https://localhost:5001/form/${project?.nickname || "uxreview"}/${selectedForm}?token=${token}`;
 </script>
 
 <main>
@@ -52,6 +53,15 @@
         <option value={form.name}>{form.name}</option>
       {/each}
     </select>
+    <!-- svelte-ignore a11y-invalid-attribute -->
+    <a
+      href="javascript:void(0)"
+      on:click={() => {
+        // reload iframe
+        const iframe = document.querySelector("iframe");
+        iframe.src = iframe.src;
+      }}>refresh</a
+    >
   </div>
   <!-- <div>
     <pre>{debug}</pre>
